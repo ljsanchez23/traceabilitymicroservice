@@ -44,4 +44,16 @@ public class AdaptersConstants {
             "Failed to generate report. Please check the request parameters.";
     public static final String GENERATE_REPORT_ENDPOINT_UNAUTHORIZED_DESCRIPTION =
             "Unauthorized request. Please provide a valid JWT token.";
+    public static final String GET_ALL_ORDERS_EFFICIENCY_ENDPOINT_URL = "/generate/efficiency";
+    public static final String CALCULATE_EMPLOYEE_RANKING_ENDPOINT_URL = "/generate/ranking";
+    public static final String GET_ALL_ORDERS_ENDPOINT_SUMMARY = "Retrieve all order efficiencies";
+    public static final String GET_ALL_ORDERS_ENDPOINT_DESCRIPTION = "Fetches a list of all orders along with their efficiency metrics.";
+    public static final String GET_ALL_ORDERS_ENDPOINT_OK_DESCRIPTION = "Successfully retrieved the list of order efficiencies.";
+    public static final String GET_ALL_ORDERS_ENDPOINT_BAD_REQUEST_DESCRIPTION = "Invalid request. Please check the parameters and try again.";
+    public static final String GET_ALL_ORDERS_ENDPOINT_UNAUTHORIZED_DESCRIPTION = "Unauthorized access. Authentication is required.";
+    public static final String CALCULATE_EMPLOYEE_ENDPOINT_SUMMARY = "Calculate employee performance ranking";
+    public static final String CALCULATE_EMPLOYEE_ENDPOINT_DESCRIPTION = "Generates a ranking of employees based on the average time taken to complete orders.";
+    public static final String CALCULATE_EMPLOYEE_ENDPOINT_OK_DESCRIPTION = "Successfully calculated the employee performance ranking.";
+    public static final String CALCULATE_EMPLOYEE_ENDPOINT_BAD_REQUEST_DESCRIPTION = "Invalid request. Please check the parameters and try again.";
+    public static final String CALCULATE_EMPLOYEE_ENDPOINT_UNAUTHORIZED_DESCRIPTION = "Unauthorized access. Authentication is required.";
 }

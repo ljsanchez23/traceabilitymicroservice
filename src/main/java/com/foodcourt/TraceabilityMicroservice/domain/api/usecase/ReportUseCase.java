@@ -2,16 +2,19 @@ package com.foodcourt.TraceabilityMicroservice.domain.api.usecase;
 
 import com.foodcourt.TraceabilityMicroservice.domain.api.IReportServicePort;
 import com.foodcourt.TraceabilityMicroservice.domain.exception.ReportNotFoundException;
+import com.foodcourt.TraceabilityMicroservice.domain.model.OrderEfficiency;
 import com.foodcourt.TraceabilityMicroservice.domain.model.Report;
 import com.foodcourt.TraceabilityMicroservice.domain.spi.IAuthenticationPort;
 import com.foodcourt.TraceabilityMicroservice.domain.spi.IReportPersistencePort;
 import com.foodcourt.TraceabilityMicroservice.domain.util.Constants;
 import com.foodcourt.TraceabilityMicroservice.domain.util.ReportFormatter;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ReportUseCase implements IReportServicePort {
 
@@ -70,5 +73,31 @@ public class ReportUseCase implements IReportServicePort {
         report.setEmployeeId(employeeId);
         statuses.put(status, LocalDateTime.now());
         reportPersistencePort.saveReport(report);
+    }
+
+    @Override
+    public Map<Long, Double> calculateEmployeeRanking() {
+        List<OrderEfficiency> efficiencies = reportPersistencePort.calculateOrderEfficiencies();
+        return efficiencies.stream()
+                .collect(Collectors.groupingBy(
+                        OrderEfficiency::getEmployeeId,
+                        Collectors.averagingDouble(e -> e.getTimeTaken().toMinutes())
+                ));
+    }
+
+    @Override
+    public List<OrderEfficiency> getAllOrderEfficiencies() {
+        List<Report> reports = reportPersistencePort.getAllReports();
+
+        return reports.stream()
+                .filter(report -> report.getStatusHistory().containsKey(Constants.PENDING_STATUS)
+                        && report.getStatusHistory().containsKey(Constants.DELIVERED_STATUS))
+                .map(report -> {
+                    LocalDateTime startTime = report.getStatusHistory().get(Constants.PENDING_STATUS);
+                    LocalDateTime endTime = report.getStatusHistory().get(Constants.DELIVERED_STATUS);
+                    Duration duration = Duration.between(startTime, endTime);
+                    return new OrderEfficiency(report.getOrderId(), report.getEmployeeId(), duration);
+                })
+                .toList();
     }
 }

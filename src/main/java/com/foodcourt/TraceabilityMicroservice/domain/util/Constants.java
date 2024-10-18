@@ -13,4 +13,5 @@ public class Constants {
     public static final String ORDER_HISTORY = "Order history:\n";
     public static final String DASH_APPEND = "  - ";
     public static final String COLON_APPEND = ": ";
+    public static final String DELIVERED_STATUS = "delivered";
 }

@@ -2,7 +2,6 @@ package com.foodcourt.TraceabilityMicroservice.configuration.security;
 
 import com.foodcourt.TraceabilityMicroservice.configuration.security.jwt.filters.JwtAuthenticationFilter;
 import com.foodcourt.TraceabilityMicroservice.configuration.security.util.AuthenticationEntryPointImpl;
-import com.foodcourt.TraceabilityMicroservice.configuration.security.util.SecurityConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -19,7 +19,16 @@ public class TestConstants {
             "Should assign employee to an order";
     public static final String SHOULD_THROW_EXCEPTION_WHEN_REPORT_NOT_FOUND =
             "Should throw exception when report is not found";
+    public static final String FIST_TRY_EXPECTED = "Expected 1200 seconds but was ";
+    public static final String SECOND_TRY_EXPECTED = "Expected 900 seconds but was ";
+    public static final Integer FIRST_TIME = 1200;
+    public static final Integer SECOND_TIME = 900;
+    public static final String SHOULD_RETURN_EFFICIENCY_LIST = "Should return efficiency list";
+    public static final String SHOULD_RETURN_EMPLOYEE_RANKING = "Should calculate employee ranking correctly";
+    public static final Long FIRST_ORDER_ID = 1L;
+    public static final Long SECOND_ORDER_ID = 2L;
+    public static final Long THIRD_ORDER_EFFICIENCY = 3L;
 }
 
 
-}
+

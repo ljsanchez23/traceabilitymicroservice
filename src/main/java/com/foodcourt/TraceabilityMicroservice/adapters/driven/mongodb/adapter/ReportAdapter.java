@@ -4,12 +4,15 @@ import com.foodcourt.TraceabilityMicroservice.adapters.driven.mongodb.mapper.IRe
 import com.foodcourt.TraceabilityMicroservice.adapters.driven.mongodb.repository.IReportRepository;
 import com.foodcourt.TraceabilityMicroservice.adapters.util.AdaptersConstants;
 import com.foodcourt.TraceabilityMicroservice.domain.exception.ReportNotFoundException;
+import com.foodcourt.TraceabilityMicroservice.domain.model.OrderEfficiency;
 import com.foodcourt.TraceabilityMicroservice.domain.model.Report;
 import com.foodcourt.TraceabilityMicroservice.domain.spi.IReportPersistencePort;
 import com.foodcourt.TraceabilityMicroservice.adapters.driven.mongodb.document.ReportDocument;
+import com.foodcourt.TraceabilityMicroservice.domain.util.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -57,6 +60,35 @@ public class ReportAdapter implements IReportPersistencePort {
                 .toList();
     }
 
+    @Override
+    public List<OrderEfficiency> calculateOrderEfficiencies() {
+        List<ReportDocument> reports = reportRepository.findAll();
+
+        return reports.stream()
+                .map(this::calculateOrderEfficiency)
+                .toList();
+    }
+
+    @Override
+    public List<Report> getAllReports() {
+        List<ReportDocument> reportDocuments = reportRepository.findAll();
+        return reportDocuments.stream()
+                .map(reportDocumentMapper::toModel)
+                .toList();
+    }
+
+    protected OrderEfficiency calculateOrderEfficiency(ReportDocument report) {
+        Instant start = report.getStatusHistory().get(Constants.PENDING_STATUS);
+        Instant end = report.getStatusHistory().get(Constants.DELIVERED_STATUS);
+
+        Duration duration = Duration.between(start, end);
+
+        return new OrderEfficiency(
+                report.getOrderId(),
+                report.getEmployeeId(),
+                duration
+        );
+    }
     protected Map<String, LocalDateTime> convertInstantMapToLocalDateTime(Map<String, Instant> instantMap) {
         return instantMap.entrySet().stream()
                 .collect(Collectors.toMap(

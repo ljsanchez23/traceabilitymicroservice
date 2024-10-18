@@ -3,7 +3,6 @@ package com.foodcourt.TraceabilityMicroservice.configuration.security.jwt.filter
 import com.foodcourt.TraceabilityMicroservice.configuration.security.jwt.JwtValidate;
 import com.foodcourt.TraceabilityMicroservice.configuration.security.util.SecurityConstants;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

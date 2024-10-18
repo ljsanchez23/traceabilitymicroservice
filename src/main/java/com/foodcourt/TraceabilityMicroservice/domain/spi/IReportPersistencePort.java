@@ -1,5 +1,6 @@
 package com.foodcourt.TraceabilityMicroservice.domain.spi;
 
+import com.foodcourt.TraceabilityMicroservice.domain.model.OrderEfficiency;
 import com.foodcourt.TraceabilityMicroservice.domain.model.Report;
 
 import java.time.LocalDateTime;
@@ -11,4 +12,6 @@ public interface IReportPersistencePort {
     Map<String, LocalDateTime> getOrderStatusHistory(Long orderId);
     Report findReportByOrderId(Long orderId);
     List<Report> getReportsByCustomerId(Long customerId);
+    List<OrderEfficiency> calculateOrderEfficiencies();
+    List<Report> getAllReports();
 }
